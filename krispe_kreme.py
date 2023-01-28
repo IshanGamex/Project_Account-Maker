@@ -16,16 +16,31 @@ pip install faker
 pip install pynput
 '''
 
-root = Tk()  
+email = input("What is your email?")
+email = email + "+"
 
+month = 1
+day = 1
+
+root = Tk() 
+fake = Faker('en_US')
 ran = 0
 safety = 0
 root.title("Krispe_Kreme")
 
 
 
-def details():
-  global safety
+fname = fake.first_name()
+lname = fake.last_name()
+postc = fake.postcode()
+phone = str(fake.phone_number())
+password = fake.password()
+
+def tab():
+    k.press(Key.tab)
+    k.release(Key.tab)
+def details_input():
+  global safety, fname, lname, postc, phone, password
   if(safety % 2 == 0):
     time.sleep(2)
     k.press(Key.ctrl)
@@ -37,10 +52,34 @@ def details():
     k.release(Key.enter)
     time.sleep(2)
     for tab_to_start in range(3):
-        k.press(Key.tab)
-        k.release(Key.tab)
-
-    k.type('test')
+        tab()
+    k.type(fname)
+    tab()
+    k.type(lname)
+    tab()
+    k.press(Key.space)
+    k.release(Key.space)
+    for month_input in range (month+1):
+        k.press(Key.down)
+        k.release(Key.down)
+    tab()
+    tab()
+    k.press(Key.space)
+    k.release(Key.space)
+    for day_input in range (month+1):
+        k.press(Key.down)
+        k.release(Key.down)
+    tab()
+    tab()
+    k.type(postc)
+    tab()
+    k.type(phone[:2])
+    tab()
+    k.type(phone[3:5])
+    tab()
+    k.type(phone[6:9])
+    tab()
+    k.type(email,(month, day ))
     safety +=1
     print("safety updated")
     safety_text.configure(text = "Ready for Post-Captcha")
@@ -51,7 +90,7 @@ def details():
   
 
 def barcode_retriever():
-  global safety
+  global safety, fname, lname, postc, phone, password
   if(safety % 2 == 1):
     #code for barcode
     safety +=1
@@ -65,7 +104,7 @@ def barcode_retriever():
 
     
   print("Done")
-pre_captcha = Button(root, width = 10, height=5, text = "Pre-captcha",font = "sans 20", command =lambda: details(), background = "white")
+pre_captcha = Button(root, width = 10, height=5, text = "Pre-captcha",font = "sans 20", command =lambda: details_input(), background = "white")
 pre_captcha.grid(row = 1, column = 1)
 
 post_captcha = Button(root, width = 10, height=5, text = "Post-captcha",font = "sans 20", command =lambda: barcode_retriever(), background = "white")
