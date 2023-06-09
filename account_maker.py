@@ -70,7 +70,7 @@ def intro():
 # root.geometry("200x200")
 
 # emailbeforeat = tk.simpledialog.askstring("Account Maker", "What is your email?(Type out the part before the @ sign!!!)")
-emailbeforeat = "ishanpatra9"
+emailbeforeat = "ishanpatra9alt"
 emailafterat_counter = 1
 
 emailafterat = "gmail.com"
@@ -89,12 +89,10 @@ emailbeforeat += "+"
 now = datetime.datetime.now()
 
 email_date = ""
-month = 1
-day = 1
-prerun = False
+month = 6
+day = 5
 root = tk.Tk() 
 fake = Faker('en_US')
-ran = 0
 safety = 0
 root.title("Account Maker")
 
@@ -109,8 +107,8 @@ def tab():
 
 
 
-def details_input():
-  global prerun, month, day
+def krespe_kreme():
+  global month, day
   t.sleep(1)
   #DETAILS
   fname = fake.first_name()
@@ -122,15 +120,7 @@ def details_input():
   password = fake.password()
   print(password)
   inp_email = emailbeforeat + "(" + str(day) + "/" + str(month) + ")" + emailafterat
-  header = ['email', 'password', 'day', 'month']
-  with open("LoginDetails.csv", 'a') as file:
-    writer = csv.writer(file)
-    if file.tell() == 0:
-      writer.writerow(header)
-      writer.writerow([inp_email, password , day , month])
-
-    print("Data generated and added to the CSV file successfully!")
-
+  
   #INPUTS
   t.sleep(2)
   k.press(Key.ctrl)
@@ -228,42 +218,21 @@ def details_input():
   tab()
   tab()
   tab()
-  # k.press(Key.space) #BY PASS THE TERRIBLE SECURITY AND SIGN UP
-  # k.release(Key.space)
-  t.sleep(0.1)
-  month +=1
-  if (month == 13):
-    month = 1
-    day+=1
-
-  
-
-counter0 = tk.Label(root, text = ran, font = "sans 20", foreground = "red", background = "white")
-counter0.grid(row = 2, column = 2)
-
-
-pre_captcha = tk.Button(root, width = 10, height=5, text = "Account Maker",font = "sans 20", command =lambda: details_input(), background = "white")
-pre_captcha.grid(row = 1, column = 1)
+  k.press(Key.space) #BY PASS THE TERRIBLE SECURITY AND SIGN UP
+  k.release(Key.space)
+  day +=1
+  if (day == 31):
+    day = 1
+    month+=1
 
 
 
-class ConsoleOutput(tk.Frame):
-    def __init__(self, parent):
-        tk.Frame.__init__(self, parent)
-        self.text = tk.Text(self, wrap="word", state="disabled")
-        self.text.pack(side="bottom", fill="both", expand=True)
-        sys.stdout = self
-
-    def write(self, message):
-        self.text.configure(state="normal")
-        self.text.insert("end", message)
-        self.text.configure(state="disabled")
 
 root = tk.Tk()
-root.title("Krispe_Kreme - Console Outputs")
+root.title("Buttons")
 
-console = ConsoleOutput(root)
-console.pack(side="bottom", fill="both", expand=True)
+krespekreme = tk.Button(root, width=10, height=5, text="Krespe Kreme", font="sans 20", command=krespe_kreme, background="white")
+krespekreme.grid(row=1, column=1)
+
 
 root.mainloop()
-tk.mainloop()
